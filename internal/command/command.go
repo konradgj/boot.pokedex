@@ -3,12 +3,20 @@ package command
 import (
 	"fmt"
 	"os"
+
+	"github.com/konradgj/boot.pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {
 	name        string
 	description string
-	Callback    func() error
+	Callback    func(*Config) error
+}
+
+type Config struct {
+	PokeapiClient   pokeapi.Client
+	nextLocationUrl *string
+	prevLocationUrl *string
 }
 
 func GetCommands() map[string]cliCommand {
@@ -23,10 +31,20 @@ func GetCommands() map[string]cliCommand {
 			description: "Exit the Pokedex",
 			Callback:    commandExit,
 		},
+		"map": {
+			name:        "map",
+			description: "Show next 20 location areas",
+			Callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Show prev 20 location areas",
+			Callback:    commandMapB,
+		},
 	}
 }
 
-func commandHelp() error {
+func commandHelp(conf *Config) error {
 	fmt.Println()
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
@@ -37,7 +55,7 @@ func commandHelp() error {
 	return nil
 }
 
-func commandExit() error {
+func commandExit(conf *Config) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil

@@ -9,7 +9,7 @@ import (
 	"github.com/konradgj/boot.pokedex/internal/command"
 )
 
-func Start() {
+func Start(cfg *command.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex >")
@@ -20,13 +20,13 @@ func Start() {
 			continue
 		}
 
-		command, exists := command.GetCommands()[words[0]]
+		cmd, exists := command.GetCommands()[words[0]]
 		if !exists {
 			fmt.Println("Unknown Command")
 			continue
 		}
 
-		err := command.Callback()
+		err := cmd.Callback(cfg)
 		if err != nil {
 			fmt.Println(err)
 		}
