@@ -1,2 +1,2 @@
 # boot.pokedex
-bott.dev REPL pokedex project
+boot.dev REPL pokedex project
