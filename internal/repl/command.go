@@ -1,9 +1,6 @@
-package command
+package repl
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/konradgj/boot.pokedex/internal/pokeapi"
 )
 
@@ -19,7 +16,7 @@ type Config struct {
 	prevLocationUrl *string
 }
 
-func GetCommands() map[string]cliCommand {
+func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
 			name:        "help",
@@ -42,21 +39,4 @@ func GetCommands() map[string]cliCommand {
 			Callback:    commandMapB,
 		},
 	}
-}
-
-func commandHelp(conf *Config) error {
-	fmt.Println()
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:")
-	fmt.Println()
-	for _, cmd := range GetCommands() {
-		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
-	}
-	return nil
-}
-
-func commandExit(conf *Config) error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
 }

@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	"github.com/konradgj/boot.pokedex/internal/command"
 )
 
-func Start(cfg *command.Config) {
+func Start(cfg *Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex >")
@@ -20,7 +18,7 @@ func Start(cfg *command.Config) {
 			continue
 		}
 
-		cmd, exists := command.GetCommands()[words[0]]
+		cmd, exists := getCommands()[words[0]]
 		if !exists {
 			fmt.Println("Unknown Command")
 			continue
