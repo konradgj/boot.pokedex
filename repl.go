@@ -7,17 +7,6 @@ import (
 	"strings"
 )
 
-func cleanInput(text string) []string {
-	if len(text) == 0 {
-		return nil
-	}
-	parts := strings.Fields(text)
-	for i, word := range parts {
-		parts[i] = strings.ToLower(word)
-	}
-	return parts
-}
-
 func initREPL() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -29,6 +18,26 @@ func initREPL() {
 			continue
 		}
 
-		fmt.Printf("Your command was: %s\n", words[0])
+		command, exists := getCommands()[words[0]]
+		if !exists {
+			fmt.Println("Unknown Command")
+			continue
+		}
+
+		err := command.callback()
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
+}
+
+func cleanInput(text string) []string {
+	if len(text) == 0 {
+		return nil
+	}
+	parts := strings.Fields(text)
+	for i, word := range parts {
+		parts[i] = strings.ToLower(word)
+	}
+	return parts
 }
