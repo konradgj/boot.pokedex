@@ -1,4 +1,4 @@
-package main
+package command
 
 import (
 	"fmt"
@@ -8,20 +8,20 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	Callback    func() error
 }
 
-func getCommands() map[string]cliCommand {
+func GetCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
 			name:        "help",
 			description: "Displays a help message",
-			callback:    commandHelp,
+			Callback:    commandHelp,
 		},
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
-			callback:    commandExit,
+			Callback:    commandExit,
 		},
 	}
 }
@@ -31,7 +31,7 @@ func commandHelp() error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println()
-	for _, cmd := range getCommands() {
+	for _, cmd := range GetCommands() {
 		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 	return nil

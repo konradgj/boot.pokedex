@@ -1,13 +1,15 @@
-package main
+package repl
 
 import (
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/konradgj/boot.pokedex/internal/command"
 )
 
-func initREPL() {
+func Start() {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex >")
@@ -18,13 +20,13 @@ func initREPL() {
 			continue
 		}
 
-		command, exists := getCommands()[words[0]]
+		command, exists := command.GetCommands()[words[0]]
 		if !exists {
 			fmt.Println("Unknown Command")
 			continue
 		}
 
-		err := command.callback()
+		err := command.Callback()
 		if err != nil {
 			fmt.Println(err)
 		}
