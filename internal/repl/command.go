@@ -12,6 +12,7 @@ type cliCommand struct {
 
 type Config struct {
 	PokeapiClient   pokeapi.Client
+	Pokedex         map[string]pokeapi.Pokemon
 	nextLocationUrl *string
 	prevLocationUrl *string
 }
@@ -42,6 +43,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Explore a specific area by name",
 			Callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Catch a pokemon",
+			Callback:    commandCatch,
 		},
 	}
 }
