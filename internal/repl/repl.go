@@ -13,18 +13,24 @@ func Start(cfg *Config) {
 		fmt.Print("Pokedex >")
 		scanner.Scan()
 
-		words := cleanInput(scanner.Text())
-		if len(words) == 0 {
+		parts := cleanInput(scanner.Text())
+		if len(parts) == 0 {
 			continue
 		}
 
-		cmd, exists := getCommands()[words[0]]
+		command := parts[0]
+		var args []string
+		if len(parts) > 1 {
+			args = parts[1:]
+		}
+
+		cmd, exists := getCommands()[command]
 		if !exists {
 			fmt.Println("Unknown Command")
 			continue
 		}
 
-		err := cmd.Callback(cfg)
+		err := cmd.Callback(cfg, args...)
 		if err != nil && err.Error() == "exit" {
 			fmt.Println("Closing the Pokedex... Goodbye!")
 			break
