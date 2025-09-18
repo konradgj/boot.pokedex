@@ -6,10 +6,20 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetLocationArea(pageUrl *string) (RespShallowLocations, error) {
+func (c *Client) GetLocationAreas(pageUrl *string) (RespShallowLocations, error) {
 	url := baseURL + "/location-area"
 	if pageUrl != nil {
 		url = *pageUrl
+	}
+
+	if val, ok := c.cache.Get(url); ok {
+		lResp := RespShallowLocations{}
+		err := json.Unmarshal(val, &lResp)
+		if err != nil {
+			return RespShallowLocations{}, err
+		}
+
+		return lResp, nil
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -34,5 +44,6 @@ func (c *Client) GetLocationArea(pageUrl *string) (RespShallowLocations, error) 
 		return RespShallowLocations{}, err
 	}
 
+	c.cache.Add(url, data)
 	return lResp, nil
 }

@@ -2,7 +2,6 @@ package repl
 
 import (
 	"fmt"
-	"os"
 )
 
 func commandHelp(cfg *Config) error {
@@ -17,7 +16,5 @@ func commandHelp(cfg *Config) error {
 }
 
 func commandExit(cfg *Config) error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
+	return fmt.Errorf("exit")
 }

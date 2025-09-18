@@ -6,7 +6,7 @@ import (
 )
 
 func commandMap(cfg *Config) error {
-	lResp, err := cfg.PokeapiClient.GetLocationArea(cfg.nextLocationUrl)
+	lResp, err := cfg.PokeapiClient.GetLocationAreas(cfg.nextLocationUrl)
 	if err != nil {
 		return err
 	}
@@ -25,7 +25,7 @@ func commandMapB(cfg *Config) error {
 		return errors.New("you're on the first page")
 	}
 
-	lResp, err := cfg.PokeapiClient.GetLocationArea(cfg.prevLocationUrl)
+	lResp, err := cfg.PokeapiClient.GetLocationAreas(cfg.prevLocationUrl)
 	if err != nil {
 		return err
 	}

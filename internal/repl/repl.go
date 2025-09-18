@@ -25,7 +25,10 @@ func Start(cfg *Config) {
 		}
 
 		err := cmd.Callback(cfg)
-		if err != nil {
+		if err != nil && err.Error() == "exit" {
+			fmt.Println("Closing the Pokedex... Goodbye!")
+			break
+		} else if err != nil {
 			fmt.Println(err)
 		}
 	}
